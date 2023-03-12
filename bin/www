@@ -7,6 +7,7 @@
 var app = require('../app');
 var debug = require('debug')('onboarding:server');
 var http = require('http');
+var db = require('../models/modelDB');
 
 /**
  * Get port from environment and store in Express.
