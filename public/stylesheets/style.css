@@ -1,8 +1,19 @@
 body {
-  padding: 50px;
-  font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+  font: 1rem "Lucida Grande", Helvetica, Arial, sans-serif;
+  background-image: url("../images/leaves.png");
+  padding: 5rem;
 }
 
 a {
   color: #00B7FF;
 }
+
+h1 {
+  color: white;
+}
+
+.displayArea{
+  background-color: whitesmoke;
+  width:50%;
+}
+

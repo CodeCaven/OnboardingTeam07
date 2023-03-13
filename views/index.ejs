@@ -3,8 +3,25 @@
   
   <% include ./partials/head %>
   <body>
-    <h1>...Coming Soon</h1>
-    <p>Team 7's super, amazing, wonderful, fantastic recycling webApp</p>
-	<p>You won't believe your eyes!!!</p>
+    <div class="container">
+
+      <h1 class="text-center">Victorian Household </br>Waste Recycling</h1>
+      <div class="text-center">
+      <!--<img src="../public/images/recycling.png" alt=""> -->
+    </div>
+      <div class="input-group mb-3">
+        <div class="input-group-prepend">
+          <span class="input-group-text">Aluminium Cans</span>
+        </div>
+        <input type="text" class="form-control" id="inputArea" placeholder="Enter ammount in tonnes" aria-label="Enter amount in tonnes" aria-describedby="basic-addon2">
+        <div class="input-group-append">
+          <button class="btn btn-outline-secondary" type="button" onclick="displayCalc()">Check Environmental Benefits</button>
+        </div>
+      </div>    
+      
+      <div class="text-center displayArea" id="display">
+        
+      </div>
+    </div>
   </body>
 </html>
