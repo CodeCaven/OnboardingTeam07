@@ -17,3 +17,13 @@ h1 {
   width:50%;
 }
 
+.icon{
+  font-size: 2em;
+  color: white;
+  margin-bottom: 1em;
+}
+
+.searchbar{
+  width:70%;
+}
+

@@ -1,19 +1,39 @@
 <head>
     <title>Victorian Household Waste Recycling</title>
+    <script src="https://kit.fontawesome.com/f77ac44772.js" crossorigin="anonymous"></script> <!--Font Awesome icons-->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css" integrity="sha384-xOolHFLEh07PJGoPkLv1IbcEPTNtaed2xpHsD9ESMhqIYd0nLMwNLD69Npy4HI+N" crossorigin="anonymous">
     <link rel='stylesheet' href='/stylesheets/style.css' />
     
 
     <script type="text/javascript">
         
-        
+        // get recycling items from database controller
         let items = <%-JSON.stringify(ejs_items)%>
         console.log(items);
 
         function displayCalc(){
             let displayArea = document.getElementById("display");
             let inputArea = document.getElementById("inputArea");
-            console.log(inputArea.value);
+            let inputValue = inputArea.value;
+            console.log(inputValue);
+            // HERE
+            // check for number
+            // create display string from items
+            if(isNaN(inputValue)){
+                displayArea.innerHTML = "Please enter a whole number"
+            }
+            else{
+                let gigaj = inputValue/items[0]["energy_saved_gj"];
+                let cars = inputValue/items[0]["equivalent_cars"];
+                let trees = inputValue/items[0]["equivalent_trees"];
+
+                let displayString = "Recycling " + inputValue + " tonnes of Aluminium cans </br>";
+                displayString += "Saves " + gigaj + " GigaJoules of Energy </br>";
+                displayString += "Is equivalent to " + cars + " days of driving </br>";
+                displayString += "Is equivalent to " + trees + " trees planted </br>";
+
+                displayArea.innerHTML = displayString;
+            }
         }
         
 
