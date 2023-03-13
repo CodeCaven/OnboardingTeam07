@@ -11,13 +11,13 @@
         let items = <%-JSON.stringify(ejs_items)%>
         console.log(items);
 
+        // CANS
         function displayCalc(){
             let displayArea = document.getElementById("display");
             let inputArea = document.getElementById("inputArea");
             let inputValue = inputArea.value;
             console.log(inputValue);
-            // HERE
-            // check for number
+            
             // create display string from items
             if(isNaN(inputValue)){
                 displayArea.innerHTML = "Please enter a whole number"
@@ -27,7 +27,56 @@
                 let cars = inputValue/items[0]["equivalent_cars"];
                 let trees = inputValue/items[0]["equivalent_trees"];
 
-                let displayString = "Recycling " + inputValue + " tonnes of Aluminium cans </br>";
+                let displayString = "Recycling " + inputValue + " tonnes of Aluminium Cans </br>";
+                displayString += "Saves " + gigaj + " GigaJoules of Energy </br>";
+                displayString += "Is equivalent to " + cars + " days of driving </br>";
+                displayString += "Is equivalent to " + trees + " trees planted </br>";
+
+                displayArea.innerHTML = displayString;
+            }
+        }
+
+        // CANS Boot list
+        function displayCalcBoot(){
+            let displayArea = document.getElementById("display");
+            let inputArea = document.getElementById("inputArea");
+            let inputValue = inputArea.value;
+            console.log(inputValue);
+            
+            // create display string from items
+            if(isNaN(inputValue)){
+                displayArea.innerHTML = "Please enter a whole number"
+            }
+            else{
+                let gigaj = inputValue/items[0]["energy_saved_gj"];
+                let cars = inputValue/items[0]["equivalent_cars"];
+                let trees = inputValue/items[0]["equivalent_trees"];
+
+                let displayString = "Recycling " + inputValue + " tonnes of Aluminium Cans </br>";
+                displayString += "Saves " + gigaj + " GigaJoules of Energy </br>";
+                displayString += "Is equivalent to " + cars + " days of driving </br>";
+                displayString += "Is equivalent to " + trees + " trees planted </br>";
+
+                displayArea.innerHTML = displayString;
+            }
+        }
+
+        // ORGANICS
+        function displayCalcOrg(){
+            let displayArea = document.getElementById("display");
+            let inputArea = document.getElementById("inputAreaOrg");
+            let inputValue = inputArea.value;
+            console.log(inputValue);
+            
+            if(isNaN(inputValue)){
+                displayArea.innerHTML = "Please enter a whole number"
+            }
+            else{
+                let gigaj = inputValue/items[5]["energy_saved_gj"]*-1; // error in data
+                let cars = inputValue/items[5]["equivalent_cars"];
+                let trees = inputValue/items[5]["equivalent_trees"];
+
+                let displayString = "Recycling " + inputValue + " tonnes of Garden organics </br>";
                 displayString += "Saves " + gigaj + " GigaJoules of Energy </br>";
                 displayString += "Is equivalent to " + cars + " days of driving </br>";
                 displayString += "Is equivalent to " + trees + " trees planted </br>";

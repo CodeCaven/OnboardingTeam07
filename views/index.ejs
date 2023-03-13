@@ -3,24 +3,34 @@
   
   <% include ./partials/head %>
   <body>
-    <div class="container">
+    <div class="container-fluid">
 
       <h1 class="text-center">Victorian Household </br>Waste Recycling</h1>
       <div class="text-center">
       <!--<img src="../public/images/recycling.png" alt=""> -->
       <span class="fas fa-recycle icon"></span>
     </div>
-      <div class="input-group mb-3 searchBar">
+      <div class="input-group mb-3 searchBar mx-auto">
         <div class="input-group-prepend">
           <span class="input-group-text">Aluminium Cans</span>
         </div>
         <input type="text" class="form-control" id="inputArea" placeholder="Enter ammount in tonnes" aria-label="Enter amount in tonnes" aria-describedby="basic-addon2">
         <div class="input-group-append">
-          <button class="btn btn-outline-secondary" type="button" onclick="displayCalc()">Check Environmental Benefits</button>
+          <button class="btn btn-primary" type="button" onclick="displayCalc()">Check Environmental Benefits</button>
         </div>
-      </div>    
+      </div> 
       
-      <div class="text-center displayArea" id="display">
+      <div class="input-group mb-3 searchBar mx-auto">
+        <div class="input-group-prepend">
+          <span class="input-group-text">Organics</span>
+        </div>
+        <input type="text" class="form-control" id="inputAreaOrg" placeholder="Enter ammount in tonnes" aria-label="Enter amount in tonnes" aria-describedby="basic-addon2">
+        <div class="input-group-append">
+          <button class="btn btn-primary" type="button" onclick="displayCalcOrg()">Check Environmental Benefits</button>
+        </div>
+      </div>  
+      
+      <div class="mx-auto displayArea" id="display">
         
       </div>
     </div>
