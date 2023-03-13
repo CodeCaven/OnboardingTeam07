@@ -96,6 +96,66 @@
 
         }
 
+        // CANS Boot list
+        function displayCalcBootOrg(){
+            let displayArea = document.getElementById("display");
+            let inputArea = document.getElementById("inputAreaOrg");
+            let inputValue = inputArea.value;
+            console.log(inputValue);
+
+            while (displayArea.hasChildNodes()) {
+                displayArea.removeChild(displayArea.firstChild);
+            }
+
+            // create list
+            var ul_el = document.createElement("ul");
+            ul_el.className = "list-group";
+            
+            // create display string from items
+            if(isNaN(inputValue)){
+                let li_e = document.createElement("li");
+                li_e.className = "list-group-item";
+                li_e.innerHTML = "Please enter a whole number";
+                ul_el.append(li_e);
+
+            }
+            else{
+                let gigaj = inputValue/items[0]["energy_saved_gj"];
+                let cars = inputValue/items[0]["equivalent_cars"];
+                let trees = inputValue/items[0]["equivalent_trees"];
+
+                // header
+                let displayStringHead = "<strong>Recycling " + inputValue + " tonnes of Garden Organics</strong>";
+                let li_h = document.createElement("li");
+                li_h.className = "list-group-item";
+                li_h.innerHTML = displayStringHead;
+                ul_el.append(li_h);
+
+                // energy
+                let displayStringEnergy = "Saves " + gigaj + " GigaJoules of Energy";
+                let li_e = document.createElement("li");
+                li_e.className = "list-group-item";
+                li_e.innerHTML = displayStringEnergy;
+                ul_el.append(li_e);
+
+                // cars
+                let displayStringCars = "Is equivalent to " + cars + " days of driving";
+                let li_c = document.createElement("li");
+                li_c.className = "list-group-item";
+                li_c.innerHTML = displayStringCars;
+                ul_el.append(li_c);
+
+                // trees
+                let displayStringTrees = "Is equivalent to " + trees + " trees planted";
+                let li_t = document.createElement("li");
+                li_t.className = "list-group-item";
+                li_t.innerHTML = displayStringTrees;
+                ul_el.append(li_t);
+            }
+            displayArea.append(ul_el);
+
+        }
+
         // ORGANICS
         function displayCalcOrg(){
             let displayArea = document.getElementById("display");
