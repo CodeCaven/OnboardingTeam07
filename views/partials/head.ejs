@@ -7,9 +7,16 @@
 
     <script type="text/javascript">
         
-        // get recycling items from database controller
-        let items = <%-JSON.stringify(ejs_items)%>
-        console.log(items);
+        // all data from the database
+        let items_table = <%-JSON.stringify(ejs_items)%>
+        let local_govs_table = <%-JSON.stringify(ejs_govs)%>
+        let trends_table = <%-JSON.stringify(ejs_trends)%>
+        let centres_table = <%-JSON.stringify(ejs_centres)%>
+
+        console.log(items_table);
+        console.log(local_govs_table);
+        console.log(trends_table);
+        console.log(centres_table);
 
         // CANS
         function displayCalc(){ // not used
