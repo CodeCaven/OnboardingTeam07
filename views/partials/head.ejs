@@ -30,9 +30,9 @@
                 displayArea.innerHTML = "Please enter a whole number"
             }
             else{
-                let gigaj = inputValue/items[0]["energy_saved_gj"];
-                let cars = inputValue/items[0]["equivalent_cars"];
-                let trees = inputValue/items[0]["equivalent_trees"];
+                let gigaj = inputValue/items_table[0]["energy_saved_gj"];
+                let cars = inputValue/items_table[0]["equivalent_cars"];
+                let trees = inputValue/items_table[0]["equivalent_trees"];
 
                 let displayString = "Recycling " + inputValue + " tonnes of Aluminium Cans </br>";
                 displayString += "Saves " + gigaj + " GigaJoules of Energy </br>";
@@ -74,9 +74,9 @@
 
             }
             else{
-                let gigaj = inputValue/items[0]["energy_saved_gj"];
-                let cars = inputValue/items[0]["equivalent_cars"];
-                let trees = inputValue/items[0]["equivalent_trees"];
+                let gigaj = inputValue/items_table[0]["energy_saved_gj"];
+                let cars = inputValue/items_table[0]["equivalent_cars"];
+                let trees = inputValue/items_table[0]["equivalent_trees"];
 
                 // header
                 let displayStringHead = "<strong>Recycling " + inputValue + " tonnes of Aluminium Cans</strong>";
@@ -141,9 +141,9 @@
 
             }
             else{
-                let gigaj = inputValue/items[0]["energy_saved_gj"];
-                let cars = inputValue/items[0]["equivalent_cars"];
-                let trees = inputValue/items[0]["equivalent_trees"];
+                let gigaj = inputValue/items_table[0]["energy_saved_gj"];
+                let cars = inputValue/items_table[0]["equivalent_cars"];
+                let trees = inputValue/items_table[0]["equivalent_trees"];
 
                 // header
                 let displayStringHead = "<strong>Recycling " + inputValue + " tonnes of Garden Organics</strong>";
@@ -188,9 +188,9 @@
                 displayArea.innerHTML = "Please enter a whole number"
             }
             else{
-                let gigaj = inputValue/items[5]["energy_saved_gj"]*-1; // error in data
-                let cars = inputValue/items[5]["equivalent_cars"];
-                let trees = inputValue/items[5]["equivalent_trees"];
+                let gigaj = inputValue/items_table[5]["energy_saved_gj"]*-1; // error in data
+                let cars = inputValue/items_table[5]["equivalent_cars"];
+                let trees = inputValue/items_table[5]["equivalent_trees"];
 
                 let displayString = "Recycling " + inputValue + " tonnes of Garden organics </br>";
                 displayString += "Saves " + gigaj + " GigaJoules of Energy </br>";
