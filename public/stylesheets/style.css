@@ -2,6 +2,7 @@ body {
   font: 1rem "Lucida Grande", Helvetica, Arial, sans-serif;
   background-image: url("../images/leaves.png");
   padding: 5rem;
+  letter-spacing: 0.3rem;
 }
 
 a {
@@ -15,19 +16,32 @@ h1 {
 .displayArea{
   background-color: whitesmoke;
   width:50%;
+  letter-spacing:normal;
 }
 
 .icon{
   font-size: 2em;
   color: white;
   margin-bottom: 1em;
+  letter-spacing:normal;
 }
 
 .searchBar{
   width:70%;
 }
 
-.test{
-  width:70%;
+.tile{
+  background-color:whitesmoke;
+  height: 30vh;
+  border-radius: 0.5rem;
+  cursor:pointer;
+  padding: 1rem;
+  opacity: .7;
+  -webkit-transition: all 0.5s linear;
+  transition: all 0.5s linear;
+}
+
+.backButton{
+  cursor:pointer;
 }
 

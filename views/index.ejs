@@ -3,17 +3,41 @@
   
   <% include ./partials/head %>
   <body>
+    <!--title-->
     <div class="container-fluid">
-
       <h1 class="text-center">Victorian Household </br>Waste Recycling</h1>
       <div class="text-center">
-      <!--<img src="../public/images/recycling.png" alt=""> -->
-      <span class="fas fa-recycle icon"></span>
+        <span class="fas fa-recycle icon"></span>
+      </div>
     </div>
+
+    <!--landing page-->
+    <div class="container-fluid" id="container-landing">
+      <div class="row justify-content-md-center" >
+        <div class="col col-lg-3">
+          <div class="feature calc tile justify-content-center  d-flex align-items-center" onmouseover="highlightTile(this)" onmouseout="highlightOut(this)">
+            <p class="feature calc font-weight-bold">Use the </br> Energy Savings Calculator</p>
+          </div>
+        </div>
+        <div class="col col-lg-3">
+          <div class="feature rec tile justify-content-center  d-flex align-items-center" onmouseover="highlightTile(this)" onmouseout="highlightOut(this)">
+            <p class="feature rec font-weight-bold">Find your </br> Closest Recycling Centre</p>
+          </div>
+        </div>
+        <div class="col col-lg-3">
+          <div class="feature perf tile justify-content-center  d-flex align-items-center" onmouseover="highlightTile(this)" onmouseout="highlightOut(this)">
+           <p class="feature perf font-weight-bold">Check your </br> Local Council Performance</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!--calculator-->
+    <div class="container-fluid" id="container-calculator" style="display:none;">
       <div class="input-group mb-3 searchBar mx-auto">
         <div class="input-group-prepend">
           <div class="dropdown">
-            <button class="btn btn-dark dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            <button class="btn btn-success dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
               Aluminium Cans
             </button>
             <div class="dropdown-menu" aria-labelledby="dropdownMenuButton" id="dropHeader">
@@ -29,6 +53,9 @@
 
       <div class="mx-auto displayArea" id="display">
         
+      </div>
+      <div class="back text-center backButton">
+        <span class="back fas fa-backward icon"> Back</span>
       </div>
     </div>
 
