@@ -8,48 +8,65 @@
     <script type="text/javascript">
         
         // all data from the database
-        let items_table = <%-JSON.stringify(ejs_items)%>
+        let items_table = <%-JSON.stringify(ejs_items)%>;
         let local_govs_table = <%-JSON.stringify(ejs_govs)%>
         let trends_table = <%-JSON.stringify(ejs_trends)%>
         let centres_table = <%-JSON.stringify(ejs_centres)%>
 
+        // log to console
         console.log(items_table);
         console.log(local_govs_table);
         console.log(trends_table);
         console.log(centres_table);
 
-        // CANS
-        function displayCalc(){ // not used
-            let displayArea = document.getElementById("display");
-            let inputArea = document.getElementById("inputArea");
-            let inputValue = inputArea.value;
-            console.log(inputValue);
-            
-            // create display string from items
-            if(isNaN(inputValue)){
-                displayArea.innerHTML = "Please enter a whole number"
-            }
-            else{
-                let gigaj = inputValue/items_table[0]["energy_saved_gj"];
-                let cars = inputValue/items_table[0]["equivalent_cars"];
-                let trees = inputValue/items_table[0]["equivalent_trees"];
+        // globals
+        let item = "Aluminium Cans";
 
-                let displayString = "Recycling " + inputValue + " tonnes of Aluminium Cans </br>";
-                displayString += "Saves " + gigaj + " GigaJoules of Energy </br>";
-                displayString += "Is equivalent to " + cars + " days of driving </br>";
-                displayString += "Is equivalent to " + trees + " trees planted </br>";
+        // DOM loaded callback
+		document.addEventListener('DOMContentLoaded', function() {
 
-                displayArea.innerHTML = displayString;
+            // create dropdown list
+            let dropHeader = document.getElementById("dropHeader");
+
+            // loop to add button
+            for (let item in items_table){
+
+                let listItem = document.createElement("a");
+                listItem.className = "dropdown-item";
+                listItem.href = "#";
+                listItem.innerHTML = items_table[item]["item_name"];
+                dropHeader.append(listItem);
             }
+
+            // event listeners
+            document.getElementById("dropHeader").addEventListener("click", toggleItems);
+
+        }, false);
+
+        // change item
+        function toggleItems(event){
+            item = event.target.innerHTML;
+
+            // update dropdown button
+            let dropHeader = document.getElementById("dropdownMenuButton");
+            dropHeader.innerHTML = item;
         }
 
-        // CANS Boot list
+        // create display list
         function displayCalcBoot(){
             let displayArea = document.getElementById("display");
             let inputArea = document.getElementById("inputArea");
             let inputValue = inputArea.value;
-            console.log(inputValue);
+            
+            // find index of item in table
+            let tableIndex = 0;
+            for(let indexNumber in items_table){
+                if(items_table[indexNumber]["item_name"] == item){
+                    tableIndex = indexNumber;
+                }
+            }
 
+            // remove elements in display area
             while (displayArea.hasChildNodes()) {
                 displayArea.removeChild(displayArea.firstChild);
             }
@@ -58,28 +75,33 @@
             var ul_el = document.createElement("ul");
             ul_el.className = "list-group";
             
-            // create display string from items
-            if(isNaN(inputValue)){
-                let li_e = document.createElement("li");
-                li_e.className = "list-group-item";
-                li_e.innerHTML = "Please enter a whole number";
-                ul_el.append(li_e);
-
-            }
-            else if(inputValue < 0){
+            // create list items
+            if(isNaN(inputValue)){ // not a number
                 let li_e = document.createElement("li");
                 li_e.className = "list-group-item";
                 li_e.innerHTML = "Please enter a positive number";
                 ul_el.append(li_e);
 
             }
-            else{
-                let gigaj = inputValue/items_table[0]["energy_saved_gj"];
-                let cars = inputValue/items_table[0]["equivalent_cars"];
-                let trees = inputValue/items_table[0]["equivalent_trees"];
+            else if(inputValue < 0){ // negative number
+                let li_e = document.createElement("li");
+                li_e.className = "list-group-item";
+                li_e.innerHTML = "Please enter a positive number";
+                ul_el.append(li_e);
 
+            }
+            else{ 
+                // get attributes
+                let gigaj = Number((inputValue/items_table[tableIndex]["energy_saved_gj"]).toFixed(5));
+                let co2 = Number((inputValue/items_table[tableIndex]["total_co2_tonnes"]).toFixed(5));
+                let cars = Number((inputValue/items_table[tableIndex]["equivalent_cars"]).toFixed(5));
+                let trees = Number((inputValue/items_table[tableIndex]["equivalent_trees"]).toFixed(5));
+                let distance = Number((inputValue/items_table[tableIndex]["distance_driven"]).toFixed(5));
+                let tv = Number((inputValue/items_table[tableIndex]["tv_days"]).toFixed(5));
+
+                
                 // header
-                let displayStringHead = "<strong>Recycling " + inputValue + " tonnes of Aluminium Cans</strong>";
+                let displayStringHead = "<strong>Recycling " + inputValue + " tonnes of " + item +  "</strong>";
                 let li_h = document.createElement("li");
                 li_h.className = "list-group-item";
                 li_h.innerHTML = displayStringHead;
@@ -92,114 +114,45 @@
                 li_e.innerHTML = displayStringEnergy;
                 ul_el.append(li_e);
 
+                // co2
+                let displayStringCarbon = "Is equivalent to " + co2 + " tonnes of co2";
+                let li_co2 = document.createElement("li");
+                li_co2.className = "list-group-item";
+                li_co2.innerHTML = displayStringCarbon;
+                ul_el.append(li_co2);
+
                 // cars
-                let displayStringCars = "Is equivalent to " + cars + " days of driving";
+                let displayStringCars = "Is equivalent to " + cars + " cars off the road";
                 let li_c = document.createElement("li");
                 li_c.className = "list-group-item";
                 li_c.innerHTML = displayStringCars;
                 ul_el.append(li_c);
 
                 // trees
-                let displayStringTrees = "Is equivalent to " + trees + " trees planted";
+                let displayStringTrees = "Is equivalent to " + trees + " trees planted for carbon absorption";
                 let li_t = document.createElement("li");
                 li_t.className = "list-group-item";
                 li_t.innerHTML = displayStringTrees;
                 ul_el.append(li_t);
+
+                // driven days
+                let displayStringDist = "Is equivalent to " + tv + " days watching a large TV";
+                let li_v = document.createElement("li");
+                li_v.className = "list-group-item";
+                li_v.innerHTML = displayStringDist;
+                ul_el.append(li_v);
+
+                // driven days
+                let displayStringTV = "Is equivalent to " + distance + " kms driven in a family car";
+                let li_d = document.createElement("li");
+                li_d.className = "list-group-item";
+                li_d.innerHTML = displayStringTV;
+                ul_el.append(li_d);
             }
             displayArea.append(ul_el);
 
         }
 
-        // CANS Boot list
-        function displayCalcBootOrg(){
-            let displayArea = document.getElementById("display");
-            let inputArea = document.getElementById("inputAreaOrg");
-            let inputValue = inputArea.value;
-            console.log(inputValue);
-
-            while (displayArea.hasChildNodes()) {
-                displayArea.removeChild(displayArea.firstChild);
-            }
-
-            // create list
-            var ul_el = document.createElement("ul");
-            ul_el.className = "list-group";
-            
-            // create display string from items
-            if(isNaN(inputValue)){
-                let li_e = document.createElement("li");
-                li_e.className = "list-group-item";
-                li_e.innerHTML = "Please enter a whole number";
-                ul_el.append(li_e);
-
-            }
-            else if(inputValue < 0){
-                let li_e = document.createElement("li");
-                li_e.className = "list-group-item";
-                li_e.innerHTML = "Please enter a positive number";
-                ul_el.append(li_e);
-
-            }
-            else{
-                let gigaj = inputValue/items_table[0]["energy_saved_gj"];
-                let cars = inputValue/items_table[0]["equivalent_cars"];
-                let trees = inputValue/items_table[0]["equivalent_trees"];
-
-                // header
-                let displayStringHead = "<strong>Recycling " + inputValue + " tonnes of Garden Organics</strong>";
-                let li_h = document.createElement("li");
-                li_h.className = "list-group-item";
-                li_h.innerHTML = displayStringHead;
-                ul_el.append(li_h);
-
-                // energy
-                let displayStringEnergy = "Saves " + gigaj + " GigaJoules of Energy";
-                let li_e = document.createElement("li");
-                li_e.className = "list-group-item";
-                li_e.innerHTML = displayStringEnergy;
-                ul_el.append(li_e);
-
-                // cars
-                let displayStringCars = "Is equivalent to " + cars + " days of driving";
-                let li_c = document.createElement("li");
-                li_c.className = "list-group-item";
-                li_c.innerHTML = displayStringCars;
-                ul_el.append(li_c);
-
-                // trees
-                let displayStringTrees = "Is equivalent to " + trees + " trees planted";
-                let li_t = document.createElement("li");
-                li_t.className = "list-group-item";
-                li_t.innerHTML = displayStringTrees;
-                ul_el.append(li_t);
-            }
-            displayArea.append(ul_el);
-
-        }
-
-        // ORGANICS
-        function displayCalcOrg(){ // not used
-            let displayArea = document.getElementById("display");
-            let inputArea = document.getElementById("inputAreaOrg");
-            let inputValue = inputArea.value;
-            console.log(inputValue);
-            
-            if(isNaN(inputValue)){
-                displayArea.innerHTML = "Please enter a whole number"
-            }
-            else{
-                let gigaj = inputValue/items_table[5]["energy_saved_gj"]*-1; // error in data
-                let cars = inputValue/items_table[5]["equivalent_cars"];
-                let trees = inputValue/items_table[5]["equivalent_trees"];
-
-                let displayString = "Recycling " + inputValue + " tonnes of Garden organics </br>";
-                displayString += "Saves " + gigaj + " GigaJoules of Energy </br>";
-                displayString += "Is equivalent to " + cars + " days of driving </br>";
-                displayString += "Is equivalent to " + trees + " trees planted </br>";
-
-                displayArea.innerHTML = displayString;
-            }
-        }
         
 
     </script>
