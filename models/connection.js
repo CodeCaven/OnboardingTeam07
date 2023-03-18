@@ -15,7 +15,7 @@ const fs = require('fs');
       host: "database-2.cwclvgw1cib6.ap-southeast-2.rds.amazonaws.com",
       user: "admin",
       password: "kc9TKHtoatKiyXykr5LM",
-      database: "onboarding"
+      database: "onboardingzones2"
     });
 
     pool.getConnection(function(err, connection) {

@@ -43,6 +43,7 @@
             document.getElementById("dropHeader").addEventListener("click", toggleItems);
             document.getElementById("container-landing").addEventListener("click", showFeature);
             document.getElementById("container-calculator").addEventListener("click", showLanding);
+            document.getElementById("container-trends").addEventListener("click", showLanding);
 
         }, false);
 
@@ -63,7 +64,17 @@
                 console.log("RECYCLE");
                }
                else if(event.target.classList.contains("perf")){
-                console.log("PERFORMANCE");
+                
+                // hide landing
+                document.getElementById("container-landing").style.display = "none";
+
+                // draw graph
+                document.getElementById("container-trends").style.display = "block";
+                draw_graph();
+
+                // transition graph
+                document.getElementById("container-trends").style.opacity = 0;
+                d3.select("#container-trends").transition().duration(1000).style("opacity", 1);
                }
             };
         }
@@ -71,8 +82,9 @@
         // show the landing page (from back button)
         function showLanding(event){
             if(event.target.classList.contains("back")){
-                // hide calculator
+                // hide calculator, graph
                 document.getElementById("container-calculator").style.display = "none";
+                document.getElementById("container-trends").style.display = "none";
 
                 // transition calculator
                 document.getElementById("container-landing").style.display = "block";
@@ -156,7 +168,7 @@
                 ul_el.append(li_h);
 
                 // energy
-                let displayStringEnergy = "Saves " + gigaj + " GigaJoules of Energy";
+                let displayStringEnergy = "Saves " + gigaj + " GigaJoules of Energy which ...";
                 let li_e = document.createElement("li");
                 li_e.className = "list-group-item";
                 li_e.innerHTML = displayStringEnergy;
@@ -199,6 +211,200 @@
             }
             displayArea.append(ul_el);
 
+        }
+
+        // plot the graph
+        function draw_graph(){
+
+            // get width and height of plot area
+            var plot_area = document.getElementById("plot_chart");
+            var plot_height = plot_area.offsetHeight;
+            var plot_width = plot_area.offsetWidth;
+
+            console.log(plot_area);
+            console.log(plot_area.offsetHeight);
+            console.log(plot_area.offsetWidth);
+
+            // set the dimensions and margins of the plot 
+            var margin = {top: 10, 
+                          right: 40, 
+                          bottom: 40, 
+                          left: 40};
+            
+            // chart width and height (leaving names from old code)
+            var lineChartWidth = plot_width - margin.left - margin.right;
+            var height = plot_height - margin.top - margin.bottom;
+            
+            // remove any elements in plot area
+            while (plot_area.firstChild) {
+                plot_area.removeChild(plot_area.firstChild);
+            }
+
+            // append the svg object to the plot area
+            var svg = d3.select("#plot_chart")
+            .append("svg")
+                .attr("width", plot_width)
+                .attr("height", plot_height)
+            .append("g")
+                .attr("transform",
+                    "translate(" + margin.left + "," + margin.top + ")");
+
+            // background
+            svg.
+            append("rect")
+                .attr("id", "backLine")
+                .attr("width", lineChartWidth)
+                .attr("height", height)
+                .attr("fill", "whitesmoke")
+                .attr("x",0)
+                .attr("y",0);
+
+            // define a clipPath: everything out of this area won't be drawn (else draws in margin)
+            svg.append("defs").append("svg:clipPath")
+                .attr("id", "clipStream") 
+                .append("svg:rect")
+                .attr("width", lineChartWidth)
+                .attr("height", height)
+                .attr("x",0)
+                .attr("y",0);
+
+            // add the clip path
+            var all_streams = svg.append('g')
+                .attr("clip-path", "url(#clipStream)");
+
+            // create d3 data structure
+            var d3_data = [];
+            
+            // no js date yet
+            var new_row = {"date":trends_table[0]["reference_year"]};
+            var allKeys = [];
+            for(let i in trends_table){
+                if(new_row["date"] == trends_table[i]["reference_year"]){
+                    new_row[trends_table[i]["metro_zone"]] = trends_table[i]["diversion_rate"];
+                    allKeys.push(trends_table[i]["metro_zone"]);
+                }
+                else{
+                    d3_data.push(new_row);
+                    new_row = {"date":trends_table[i]["reference_year"]};
+                }
+            }
+            
+            // stackKeys
+            let stackKeys = [...new Set(allKeys)];
+            
+            // x scale
+            const xScale = d3.scaleLinear()
+                .domain([2002, 2019])
+                .range([ 0, lineChartWidth]);
+
+            // y scale
+            const yScale = d3.scaleLinear()
+                .domain([2.5, 0]) 
+                .range([height, 0]);
+
+            // color palette
+            const colour = d3.scaleOrdinal()
+                .domain(stackKeys)
+                .range(['#e41a1c','#377eb8','#4daf4a','#984ea3','#ff7f00','#ffff33','#a65628']);
+
+            // create stacked areas
+            var stackedData = d3.stack()
+            .offset(d3.stackOffsetNone)
+            .order(d3.stackOrderNone)
+            .keys(stackKeys);
+
+            var stack = stackedData(d3_data);
+            var area = d3.area().curve(d3.curveBasis) //d3.curveBasis
+                    .x(function(d) { return xScale(d.data.date);})
+                    .y0(function(d) { return yScale(d[0]);})
+                    .y1(function(d) { return yScale(d[1]);});
+
+            // plot the streams
+            all_streams
+            .selectAll("layers")
+            .data(stack)
+            .enter()
+            .append("path")
+            .attr("class", "streams")
+            .style("fill", function(d) { return colour(d.key); })
+            .style("fill-opacity", 0.5)
+            .style("stroke", function(d) { return colour(d.key); })
+            .style("stroke-opacity", 0.8)
+            .style("stroke-width", 0.5)
+            .on("mouseover", function(event, d){
+                // text location boundaries
+                var x = event.layerX;
+                var y = event.layerY;
+                var anchor = "middle"; 
+                if(x >= lineChartWidth -100){
+                    x = lineChartWidth - 200;
+                    anchor = "start";
+                };
+                if(x <= 150){
+                    x = x + 150;
+                }
+                if(y >= height -100){
+                    y = height - 100;
+                }
+                
+                // add text (name)
+                all_streams.append("text")
+                .attr("class", "hover-text")
+                .attr("x", x)
+                .attr("y", y)
+                .attr("dy", "1em")
+                .attr("font-size", "1em")
+                .attr("fill", "black")
+                .attr("stroke", "black")
+                .style("text-anchor", anchor)
+                .style("text-shadow", "0.1vh 0.1vh gray")
+                .text(d.key);
+
+
+                // highlight
+                d3.selectAll(".streams").style("opacity", function(e){
+                    if(e.key == d.key){return 1;}
+                    return 0.1;
+                });
+                
+            })
+            .on("mouseout", function(event, d){
+                d3.selectAll(".streams").style("opacity", 1);
+                d3.selectAll(".hover-text").remove();
+            })
+            .attr("d", area);
+
+            // HERE
+            // remove , from x-axis
+            // better colour pallete
+            // streams to bottom
+            // container flex
+
+
+            // x-axis
+            var x_axis = d3.axisBottom().scale(xScale)
+                .tickSize(10)
+                .ticks(6)
+                .tickSizeOuter(0);
+
+            // x-axis append (bottom)
+            svg.append("g")
+                .attr("transform", "translate(0," + height + ")")
+                .attr("class", "axes")
+                .call(x_axis);
+
+            // y-axis
+            svg.append("g")
+            .attr("class", "axes")
+                .call(d3.axisLeft(yScale));
+
+            // x-axis call (store for zoom)
+            //var x_axis_call = svg.append("g")
+            //.attr("transform", "translate(0," + '0' + ")")
+            //.style('font-size', '1.8vh')
+            //.attr("id", "xAxisLine")
+            //.call(x_axis);
+            
         }
 
         

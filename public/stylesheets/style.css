@@ -45,3 +45,18 @@ h1 {
   cursor:pointer;
 }
 
+
+
+#plot_chart{
+  width: 100%;
+  height: 50vh;
+}
+
+h6{
+  color:whitesmoke;
+}
+
+.axes{
+  stroke:white;
+  color:white;
+}

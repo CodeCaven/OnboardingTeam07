@@ -7,8 +7,7 @@ exports.home = function(req, res) {
     let local_gov_sql = "SELECT * FROM local_government";
     let centres_sql = "SELECT * FROM collection_centre cc, local_government lg WHERE " +
                         " cc.council_id = lg.council_id";
-    let performance_sql = "SELECT * FROM local_government_performance lgp, local_government lg" +
-                            " WHERE lgp.council_id = lg.council_id";
+    let performance_sql = "SELECT * FROM local_government_performance";
     let items_list; 
     let local_govs; 
     let trends; 
