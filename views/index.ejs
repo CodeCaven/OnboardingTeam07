@@ -93,8 +93,44 @@
         container: 'map',
         style: 'mapbox://styles/scav6/clff9jytl000s01olw0tp2vva', // replace this with your style URL
         center: [144.94, -37.84],
-        zoom: 5.0
-          });
+        zoom: 5.0,
+        customAttribution: 'Map by MonashTechTitans'});
+
+        map.addControl(new mapboxgl.GeolocateControl({
+        positionOptions: {
+        enableHighAccuracy: true
+        },
+        trackUserLocation: true,
+        showUserHeading: true
+        }));
+
+        
+        // Create a new markers (hard coding a few for example)
+        const marker = new mapboxgl.Marker()
+        .setLngLat([145.14831,  -37.80455])
+        .setPopup(new mapboxgl.Popup().setHTML("Ringwood Recycle Centre"))
+        .addTo(map);
+
+        const marker2 = new mapboxgl.Marker()
+        .setLngLat([144.97, -37.7888])
+        .setPopup(new mapboxgl.Popup().setHTML("Mitcham Recycle Centre"))
+        .addTo(map);
+
+        const marker3 = new mapboxgl.Marker()
+        .setLngLat([145.05939, -37.9431])
+        .setPopup(new mapboxgl.Popup().setHTML("Belgrave Recycle Centre"))
+        .addTo(map);
+
+        const marker4 = new mapboxgl.Marker()
+        .setLngLat([145.00147, -37.90845])
+        .setPopup(new mapboxgl.Popup().setHTML("Clayton Recycle Centre"))
+        .addTo(map);
+
+        const marker5 = new mapboxgl.Marker()
+        .setLngLat([145.1213, -37.8437])
+        .setPopup(new mapboxgl.Popup().setHTML("Waverly Recycle Centre"))
+        .addTo(map);
+
     </script>
     
 
