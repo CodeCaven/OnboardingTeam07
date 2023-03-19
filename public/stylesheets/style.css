@@ -59,6 +59,11 @@ h1 {
   width: 100%;
 }
 
+#infoDisplay{
+  color:white;
+  font-style:italic;
+}
+
 
 h6{
   color:whitesmoke;
