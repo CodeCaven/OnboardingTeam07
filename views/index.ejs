@@ -4,6 +4,8 @@
   <% include ./partials/head %>
   <body>
       
+    <script src="https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-directions/v4.1.1/mapbox-gl-directions.js"></script>
+    <link rel="stylesheet" href="https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-directions/v4.1.1/mapbox-gl-directions.css" type="text/css">
 
     <!--title-->
     <div class="container-fluid">
@@ -88,14 +90,17 @@
       <!--mapbox://styles/scav6/ck9oe4ej300r81ipkwfn7tt9g-->
       <!--mapbox://styles/scav6/clff9dqt6001201o0tpcwzng7-->
       <script>
+
+        // map attributes
         mapboxgl.accessToken = 'pk.eyJ1Ijoic2NhdjYiLCJhIjoiY2s5bzZ6dGVvMDl4eDNlcnZjbG8xM2RraiJ9.igVNjfxyOYCvwGSflM9DQA';
         const map = new mapboxgl.Map({
         container: 'map',
         style: 'mapbox://styles/scav6/clff9jytl000s01olw0tp2vva', // replace this with your style URL
         center: [144.94, -37.84],
-        zoom: 5.0,
+        zoom: 9.0,
         customAttribution: 'Map by MonashTechTitans'});
 
+          // geolocate
         map.addControl(new mapboxgl.GeolocateControl({
         positionOptions: {
         enableHighAccuracy: true
@@ -104,8 +109,19 @@
         showUserHeading: true
         }));
 
+        // directions control
+        map.addControl(
+        new MapboxDirections({
+        accessToken: mapboxgl.accessToken
+        }),
+        'top-left'
+        );
+
         
-        // Create a new markers (hard coding a few for example)
+        // Create new markers 
+        // (hard coded dummy data  to demo)
+        // ..and getting ejs data to here??
+
         const marker = new mapboxgl.Marker()
         .setLngLat([145.14831,  -37.80455])
         .setPopup(new mapboxgl.Popup().setHTML("Ringwood Recycle Centre"))
@@ -130,6 +146,33 @@
         .setLngLat([145.1213, -37.8437])
         .setPopup(new mapboxgl.Popup().setHTML("Waverly Recycle Centre"))
         .addTo(map);
+
+        const marker6 = new mapboxgl.Marker()
+        .setLngLat([145.09185,  -37.90587])
+        .setPopup(new mapboxgl.Popup().setHTML("Hawthorn Recycle Centre"))
+        .addTo(map);
+
+        const marker7 = new mapboxgl.Marker()
+        .setLngLat([145.04082, -37.758309])
+        .setPopup(new mapboxgl.Popup().setHTML("Fitzroy Recycle Centre"))
+        .addTo(map);
+
+        const marker8 = new mapboxgl.Marker()
+        .setLngLat([144.986112, -37.74105])
+        .setPopup(new mapboxgl.Popup().setHTML("Richmond Recycle Centre"))
+        .addTo(map);
+
+        const marker9 = new mapboxgl.Marker()
+        .setLngLat([145.106229, -37.709041])
+        .setPopup(new mapboxgl.Popup().setHTML("Carlton Recycle Centre"))
+        .addTo(map);
+
+        const marker10 = new mapboxgl.Marker()
+        .setLngLat([145.108792, -37.78136])
+        .setPopup(new mapboxgl.Popup().setHTML("Collingwood Recycle Centre"))
+        .addTo(map);
+
+        
 
     </script>
     
