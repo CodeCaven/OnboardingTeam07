@@ -3,6 +3,8 @@
   
   <% include ./partials/head %>
   <body>
+      
+
     <!--title-->
     <div class="container-fluid">
       <h1 class="text-center">Victorian Household </br>Waste Recycling</h1>
@@ -15,19 +17,19 @@
     <div class="container-fluid" id="container-landing">
       <div class="row justify-content-md-center" >
         <div class="col col-lg-3">
-          <div class="feature calc tile justify-content-center  d-flex align-items-center" onmouseover="highlightTile(this)" onmouseout="highlightOut(this)">
-            <p class="feature calc font-weight-bold">Use the </br> Energy Savings Calculator</p>
+          <div class="feature calc tile justify-content-center  d-flex align-items-center" id="tile1" onmouseover="highlightTile(this)" onmouseout="highlightOut(this)">
+            <p class="feature calc font-weight-bold">Use the </br> Environmental Benefits Calculator</p>
           </div>
         </div>
 
         <div class="col col-lg-3">
-          <div class="feature perf tile justify-content-center  d-flex align-items-center" onmouseover="highlightTile(this)" onmouseout="highlightOut(this)">
+          <div class="feature perf tile justify-content-center  d-flex align-items-center" id="tile2" onmouseover="highlightTile(this)" onmouseout="highlightOut(this)">
            <p class="feature perf font-weight-bold">Check your </br> Local Region Waste Management Performance</p>
           </div>
         </div>
 
         <div class="col col-lg-3">
-          <div class="feature rec tile justify-content-center  d-flex align-items-center" onmouseover="highlightTile(this)" onmouseout="highlightOut(this)">
+          <div class="feature rec tile justify-content-center  d-flex align-items-center" id="tile3" onmouseover="highlightTile(this)" onmouseout="highlightOut(this)">
             <p class="feature rec font-weight-bold">Find your </br> Closest Recycling Centre</p>
           </div>
         </div>
@@ -40,7 +42,7 @@
       <div class="input-group mb-3 searchBar mx-auto">
         <div class="input-group-prepend">
           <div class="dropdown">
-            <button class="btn btn-light dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            <button class="btn btn-dark dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
               Aluminium Cans
             </button>
             <div class="dropdown-menu" aria-labelledby="dropdownMenuButton" id="dropHeader">
@@ -70,6 +72,31 @@
         <span class="back fas fa-backward icon"> Back</span>
       </div>
       </div>
+
+      <!--map-->
+      
+    <div class="container-fluid" id="container-map" style="display:block;">
+      <h6>Victorian Collection Centre Locations</h6>
+      <div id="map"></div>
+      <div class="back text-center backButton">
+        <span class="back fas fa-backward icon"> Back</span>
+      </div>
+      </div>
+      <!--Mapbox tiles and layers-->
+      <!--mapbox://styles/scav6/clff9jytl000s01olw0tp2vva-->
+      <!--mapbox://styles/scav6/ck9o7yz7o06zd1ip9091685m3-->
+      <!--mapbox://styles/scav6/ck9oe4ej300r81ipkwfn7tt9g-->
+      <!--mapbox://styles/scav6/clff9dqt6001201o0tpcwzng7-->
+      <script>
+        mapboxgl.accessToken = 'pk.eyJ1Ijoic2NhdjYiLCJhIjoiY2s5bzZ6dGVvMDl4eDNlcnZjbG8xM2RraiJ9.igVNjfxyOYCvwGSflM9DQA';
+        const map = new mapboxgl.Map({
+        container: 'map',
+        style: 'mapbox://styles/scav6/clff9jytl000s01olw0tp2vva', // replace this with your style URL
+        center: [144.94, -37.84],
+        zoom: 5.0
+          });
+    </script>
+    
 
     <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
